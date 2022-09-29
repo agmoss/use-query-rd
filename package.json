@@ -1,0 +1,77 @@
+{
+  "name": "use-query-rd",
+  "version": "0.0.1",
+  "description": "A drop in replacement for apollo client's `useQuery` hook with a return type that mimics Elm's RemoteData ADT",
+  "keywords": [
+    "apollo",
+    "elm",
+    "useQuery"
+  ],
+  "homepage": "https://github.com/agmoss/use-query-rd#readme",
+  "bugs": {
+    "url": "https://github.com/agmoss/use-query-rd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agmoss/use-query-rd.git"
+  },
+  "license": "MIT",
+  "author": "Andrew Moss <andrew@m0ss.dev>",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "release": "release-it",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.8",
+    "jest": "^29.1.1",
+    "prettier": "^2.7.1",
+    "release-it": "^15.4.2",
+    "ts-jest": "^29.0.3",
+    "typescript": "*"
+  },
+  "peerDependencies": {
+    "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0",
+    "graphql-ws": "^5.5.5",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "subscriptions-transport-ws": "^0.9.0 || ^0.11.0"
+  },
+  "peerDependenciesMeta": {
+    "graphql-ws": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "subscriptions-transport-ws": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=16",
+    "yarn": ">=1"
+  }
+}
