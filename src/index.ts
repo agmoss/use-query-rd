@@ -25,7 +25,7 @@ export interface Success<A> {
   data: A
 }
 
-type QueryResultWithRemoteData<T> = QueryResult & { _rd: RemoteData<T> }
+export type QueryResultWithRemoteData<T> = QueryResult & { _rd: RemoteData<T> }
 
 /**
  * @description Maps a `useQuery` QueryResult to the appropriate RemoteData discriminant

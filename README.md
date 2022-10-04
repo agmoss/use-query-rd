@@ -1,4 +1,4 @@
-# `use-query-rd`
+# `use-query-rd` [![NPM](https://img.shields.io/npm/v/use-query-rd?style=for-the-badge)](https://www.npmjs.com/package/use-query-rd)
 
 > A drop in replacement for apollo client's `useQuery` hook with a return type that mimics Elm's RemoteData ADT
 
