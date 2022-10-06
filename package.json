@@ -85,6 +85,13 @@
         "preset": "angular",
         "infile": "CHANGELOG.md"
       }
+    },
+    "git": {
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true,
+      "web": true
     }
   }
 }

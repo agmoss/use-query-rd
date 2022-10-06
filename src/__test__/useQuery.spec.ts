@@ -1,4 +1,5 @@
-import { useQueryRd, QueryResultWithRemoteData } from '../index'
+import { fold } from '../rd'
+import { useQueryRd, QueryResultWithRemoteData } from '../useQueryRd'
 import gql from 'graphql-tag'
 
 interface MyDataType {
@@ -13,7 +14,7 @@ const GET_DATA_QUERY = gql`
   }
 `
 
-jest.mock('../index', () => ({
+jest.mock('../useQueryRd', () => ({
   useQueryRd: jest.fn()
 }))
 
@@ -59,11 +60,15 @@ describe('<yourFunction>', () => {
 
       const res = useQueryRd<MyDataType>(GET_DATA_QUERY)
       expect(res._rd.tag).toEqual('Success')
-      if (res._rd.tag === 'Success') {
-        expect(res._rd.data.data).toEqual('sample')
-      } else {
-        throw Error('should be success')
-      }
+
+      const f = fold(
+        () => 'Initialized',
+        () => 'Loading...',
+        (error) => `Error: ${error.message}`,
+        (data: MyDataType) => `This is my data: ${data.data}`
+      )
+
+      expect(f(res._rd)).toEqual('This is my data: sample')
     })
   })
 })
