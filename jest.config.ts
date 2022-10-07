@@ -6,9 +6,11 @@ const config: Config.InitialOptions = {
     transform: {
         "^.+\\.(t|j)s?$": "ts-jest",
     },
-    testRegex: "(/__test__/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",
+    testRegex: "(/__specs__/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",
     moduleFileExtensions: ["ts", "js", "json", "node"],
     preset: "ts-jest",
-    rootDir:"src"
+    roots: [
+        "<rootDir>/__specs__"
+    ],
 };
 export default config;

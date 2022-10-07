@@ -24,6 +24,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "__test__"]
+  "include": [
+    "src",
+    "__specs__"
+  ],
+  "exclude": [
+    "node_modules",
+    
+  ]
 }

@@ -23,6 +23,16 @@ export interface Success<A> {
   data: A
 }
 
+export const initialized = <T = never>(): RemoteData<T> => ({ tag: 'Initialized' })
+export const pending = <T = never>(): RemoteData<T> => ({ tag: 'Pending' })
+export const failure = <T = never>(error: ApolloError): RemoteData<T> => ({ tag: 'Failure', error })
+export const success = <D = never>(data: D): RemoteData<D> => ({ tag: 'Success', data })
+
+export const isInitialized = <D = never>(rd: RemoteData<D>): rd is Pending => rd.tag === 'Initialized'
+export const isLoading = <D = never>(rd: RemoteData<D>): rd is Pending => rd.tag === 'Pending'
+export const isFailure = <D = never>(rd: RemoteData<D>): rd is Failure => rd.tag === 'Failure'
+export const isSuccess = <D = never>(rd: RemoteData<D>): rd is Success<D> => rd.tag === 'Success'
+
 export const fold = <T, D>(
   initialized: () => T,
   pending: () => T,
@@ -44,3 +54,5 @@ export const fold = <T, D>(
     }
   }
 }
+
+export const map = <T, D>(f: (a: T) => D, fa: RemoteData<T>): RemoteData<D> => isSuccess(fa) ? success(f(fa.data)) : fa

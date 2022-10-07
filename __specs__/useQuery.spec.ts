@@ -1,5 +1,5 @@
-import { fold } from '../rd'
-import { useQueryRd, QueryResultWithRemoteData } from '../useQueryRd'
+import { fold } from '../src/rd'
+import { useQueryRd, QueryResultWithRemoteData } from '../src/useQueryRd'
 import gql from 'graphql-tag'
 
 interface MyDataType {
@@ -14,11 +14,11 @@ const GET_DATA_QUERY = gql`
   }
 `
 
-jest.mock('../useQueryRd', () => ({
+jest.mock('../src/useQueryRd', () => ({
   useQueryRd: jest.fn()
 }))
 
-describe('<yourFunction>', () => {
+describe('useQueryRd', () => {
   let result: Partial<
   QueryResultWithRemoteData<MyDataType>
   >

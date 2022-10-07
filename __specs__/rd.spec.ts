@@ -1,17 +1,27 @@
 import { ApolloError } from '@apollo/client'
-import { Failure, fold } from '../rd'
+import { fold, failure, pending, initialized, map, success } from '../src/rd'
+
+const rd1 = initialized()
+const rd3 = failure(new ApolloError({
+  networkError: new Error('this is an error')
+}))
 
 describe('RemoteData', () => {
-  it('failure should have an error', async () => {
-    const fail: Failure = {
-      tag: 'Failure',
-      error: new ApolloError({
-        networkError: new Error('this is an error')
-      })
-    }
+  it('failure should have an error', () => {
+    expect(rd3.tag).toEqual('Failure')
+    // @ts-expect-error
+    expect(rd3.error).toBeDefined()
+  })
 
-    expect(fail.tag).toEqual('Failure')
-    expect(fail.error).toBeDefined()
+  it('should have appropriate equality', () => {
+    expect(rd1).toEqual({ tag: 'Initialized' })
+    expect(rd1).not.toEqual(rd3)
+  })
+
+  test('test map', () => {
+    const add = (x: number): number => x + x
+    expect(map(add, pending())).toEqual(pending())
+    expect(map(add, success(5))).toEqual(success(10))
   })
 
   test('fold initialized', () => {
