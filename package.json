@@ -32,6 +32,7 @@
     "lint:src": "eslint 'src/**/*.ts' --fix",
     "lint:spec": "eslint '__specs__/**/*.ts' --fix",
     "lint": "run-s lint:*",
+    "prerelease": "yarn run build",
     "release": "release-it",
     "test": "jest"
   },
