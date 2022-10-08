@@ -1,5 +1,7 @@
 
 
+## [0.2.1](https://github.com/agmoss/use-query-rd/compare/0.2.0...0.2.1) (2022-10-08)
+
 # [0.2.0](https://github.com/agmoss/use-query-rd/compare/0.1.0...0.2.0) (2022-10-07)
 
 
