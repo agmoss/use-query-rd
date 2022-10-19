@@ -1,5 +1,12 @@
 
 
+# [0.3.0](https://github.com/agmoss/use-query-rd/compare/0.2.1...0.3.0) (2022-10-19)
+
+
+### Features
+
+* Adding in vars to the api ([373dea0](https://github.com/agmoss/use-query-rd/commit/373dea0a8c2312e46b248b31fd3d10313bc6666e))
+
 ## [0.2.1](https://github.com/agmoss/use-query-rd/compare/0.2.0...0.2.1) (2022-10-08)
 
 # [0.2.0](https://github.com/agmoss/use-query-rd/compare/0.1.0...0.2.0) (2022-10-07)
