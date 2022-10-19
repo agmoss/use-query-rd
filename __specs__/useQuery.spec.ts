@@ -25,7 +25,7 @@ describe('useQueryRd', () => {
 
   beforeEach(() => {
     result = {
-      data: null,
+      data: undefined,
       loading: false,
       error: undefined,
       _rd: {

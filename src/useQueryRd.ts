@@ -1,21 +1,19 @@
-import {
-  DocumentNode,
-  QueryResult,
-  useQuery
-} from '@apollo/client'
+import { DocumentNode, OperationVariables, QueryResult, useQuery } from '@apollo/client'
 import { RemoteData } from './rd'
 
-export type QueryResultWithRemoteData<T> = QueryResult & { _rd: RemoteData<T> }
+export type QueryResultWithRemoteData<T, V = OperationVariables> = QueryResult<T, V> & { _rd: RemoteData<T> }
 
 /**
  * @description Maps a `useQuery` QueryResult to the appropriate RemoteData discriminant
- * @param d DocumentNode
+ * @param query DocumentNode
+ * @param vars Query variables
  * @returns Everything from `QueryResult` with an accompanying `_rd` property wth the RemoteData object
  */
-export const useQueryRd = <T>(
-  d: DocumentNode
-): QueryResultWithRemoteData<T> => {
-  const res = useQuery<T>(d)
+export const useQueryRd = <T, V = OperationVariables>(
+  query: DocumentNode,
+  vars?: V
+): QueryResultWithRemoteData<T, V> => {
+  const res = useQuery<T, V>(query, { variables: vars ? { ...vars } : undefined })
 
   if (!res.called) {
     return {
