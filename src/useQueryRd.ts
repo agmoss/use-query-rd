@@ -1,19 +1,20 @@
-import { DocumentNode, OperationVariables, QueryResult, useQuery } from '@apollo/client'
+import { OperationVariables, useQuery } from '@apollo/client'
 import { RemoteData } from './rd'
 
-export type QueryResultWithRemoteData<T, V = OperationVariables> = QueryResult<T, V> & { _rd: RemoteData<T> }
+export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<typeof useQueryRd<TData, TVariables>>
 
 /**
- * @description Maps a `useQuery` QueryResult to the appropriate RemoteData discriminant
- * @param query DocumentNode
- * @param vars Query variables
+ * @description Maps a `useQuery` QueryResult status (called | loading | data | error) to the RemoteData union
+ * @param query GQL query document
+ * @param options useQuery opts
+ * @see https://www.apollographql.com/docs/react/data/queries/
+ * @note RemoteData is tagged with `tag`. There is no generic for Error as it will always be an ApolloError.
  * @returns Everything from `QueryResult` with an accompanying `_rd` property wth the RemoteData object
  */
-export const useQueryRd = <T, V = OperationVariables>(
-  query: DocumentNode,
-  vars?: V
-): QueryResultWithRemoteData<T, V> => {
-  const res = useQuery<T, V>(query, { variables: vars ? { ...vars } : undefined })
+export const useQueryRd = <TData, TVariables = OperationVariables>(
+  ...params: Parameters<typeof useQuery<TData, TVariables>>
+): ReturnType<typeof useQuery<TData, TVariables>> & { _rd: RemoteData<TData> } => {
+  const res = useQuery<TData, TVariables>(...params)
 
   if (!res.called) {
     return {

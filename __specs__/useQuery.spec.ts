@@ -58,7 +58,7 @@ describe('useQueryRd', () => {
         }
       }
 
-      const res = useQueryRd<MyDataType>(GET_DATA_QUERY)
+      const res = useQueryRd<MyDataType>(GET_DATA_QUERY, { variables: { opt: 'test' } })
       expect(res._rd.tag).toEqual('Success')
 
       const f = fold(
@@ -66,9 +66,9 @@ describe('useQueryRd', () => {
         () => 'Loading...',
         (error) => `Error: ${error.message}`,
         (data: MyDataType) => `This is my data: ${data.data}`
-      )
+      )(res._rd)
 
-      expect(f(res._rd)).toEqual('This is my data: sample')
+      expect(f).toEqual('This is my data: sample')
     })
   })
 })

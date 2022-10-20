@@ -4,14 +4,15 @@
 
 ```typescript
 import React from 'react';
-import { match } from 'ts-pattern';
+import { useQueryRd, fold } from 'use-query-rd';
 
 const ContainerComponent = (): JSX.Element =>
-  match(useQueryRd<{ data: MyDataType[] }>(GET_DATA_QUERY)._rd)
-    .with({ tag: "Initialized" }, () => <Skeleton />)
-    .with({ tag: "Pending" }, () => <Skeleton />)
-    .with({ tag: "Success" }, (data) => <MySuccessScreen data={data.data.myData} />)
-    .with({ tag: "Failure" }, (err) => <MyErrorScreen error={err.error} />).exhaustive()
+  fold(
+    () => <Skeleton />,
+    () => <Skeleton />,
+    (error) => <MyErrorScreen error={err.error} />,
+    (data: MyDataType) => <MySuccessScreen data={data.data.myData} />
+  )(useQueryRd<{ data: MyDataType[] }>(GET_DATA_QUERY)._rd)
 
 
 export default ContainerComponent;

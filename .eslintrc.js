@@ -19,5 +19,6 @@ module.exports = {
     'react'
   ],
   rules: {
+    '@typescript-eslint/no-invalid-void-type': 0
   }
 }

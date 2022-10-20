@@ -1,7 +1,10 @@
 import { ApolloError, QueryResult } from '@apollo/client'
 
 /**
+ * @name RemoteData
+ * @description A datatype representing fetched data.
  * @see https://package.elm-lang.org/packages/krisajenkins/remotedata/latest/
+ * @inspo http://blog.jenkster.com/2016/06/how-elm-slays-a-ui-antipattern.html
  */
 export type RemoteData<D> = Initialized | Pending | Failure | Success<D>
 
