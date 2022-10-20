@@ -1,5 +1,12 @@
 
 
+# [1.0.0](https://github.com/agmoss/use-query-rd/compare/0.3.0...1.0.0) (2022-10-20)
+
+
+### Features
+
+* Exact signature representation for useQueryRd, added some better docs, including variables in test ([614f5bb](https://github.com/agmoss/use-query-rd/commit/614f5bb40ca24b6e9ce3964575dd2bdb6d78153d))
+
 # [0.3.0](https://github.com/agmoss/use-query-rd/compare/0.2.1...0.3.0) (2022-10-19)
 
 
