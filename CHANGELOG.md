@@ -1,5 +1,12 @@
 
 
+# [2.0.0](https://github.com/agmoss/use-query-rd/compare/1.0.0...2.0.0) (2022-11-27)
+
+
+### Features
+
+* Adding match with default case ([6a24d93](https://github.com/agmoss/use-query-rd/commit/6a24d930fc88a151415cf36da9ed1bec6fed9326))
+
 # [1.0.0](https://github.com/agmoss/use-query-rd/compare/0.3.0...1.0.0) (2022-10-20)
 
 
