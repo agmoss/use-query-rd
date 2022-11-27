@@ -1,4 +1,4 @@
-import { fold } from '../src/rd'
+import { fold, Tags } from '../src/rd'
 import { useQueryRd, QueryResultWithRemoteData } from '../src/useQueryRd'
 import gql from 'graphql-tag'
 
@@ -29,7 +29,7 @@ describe('useQueryRd', () => {
       loading: false,
       error: undefined,
       _rd: {
-        tag: 'Initialized'
+        tag: Tags.Initialized
       }
     };
     (useQueryRd as jest.Mock).mockImplementationOnce(() => result)
@@ -51,7 +51,7 @@ describe('useQueryRd', () => {
         loading: false,
         error: undefined,
         _rd: {
-          tag: 'Success',
+          tag: Tags.Success,
           data: {
             data: 'sample'
           }

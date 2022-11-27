@@ -1,7 +1,9 @@
 import { OperationVariables, useQuery } from '@apollo/client'
-import { RemoteData } from './rd'
+import { RemoteData, Tags } from './rd'
 
-export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<typeof useQueryRd<TData, TVariables>>
+export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<
+  typeof useQueryRd<TData, TVariables>
+>
 
 /**
  * @description Maps a `useQuery` QueryResult status (called | loading | data | error) to the RemoteData union
@@ -13,14 +15,16 @@ export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<typ
  */
 export const useQueryRd = <TData, TVariables = OperationVariables>(
   ...params: Parameters<typeof useQuery<TData, TVariables>>
-): ReturnType<typeof useQuery<TData, TVariables>> & { _rd: RemoteData<TData> } => {
+): ReturnType<typeof useQuery<TData, TVariables>> & {
+    _rd: RemoteData<TData>
+  } => {
   const res = useQuery<TData, TVariables>(...params)
 
   if (!res.called) {
     return {
       ...res,
       _rd: {
-        tag: 'Initialized'
+        tag: Tags.Initialized
       }
     }
   }
@@ -29,7 +33,7 @@ export const useQueryRd = <TData, TVariables = OperationVariables>(
     return {
       ...res,
       _rd: {
-        tag: 'Pending'
+        tag: Tags.Pending
       }
     }
   }
@@ -38,7 +42,7 @@ export const useQueryRd = <TData, TVariables = OperationVariables>(
     return {
       ...res,
       _rd: {
-        tag: 'Success',
+        tag: Tags.Success,
         data: res.data
       }
     }
@@ -48,7 +52,7 @@ export const useQueryRd = <TData, TVariables = OperationVariables>(
     return {
       ...res,
       _rd: {
-        tag: 'Failure',
+        tag: Tags.Failure,
         error: res.error
       }
     }
