@@ -1,5 +1,12 @@
 
 
+## [2.0.1](https://github.com/agmoss/use-query-rd/compare/2.0.0...2.0.1) (2022-11-28)
+
+
+### Bug Fixes
+
+* Lowering engine specifications ([fc79435](https://github.com/agmoss/use-query-rd/commit/fc7943569741c1b6bdfad9adff39feee639cdd20))
+
 # [2.0.0](https://github.com/agmoss/use-query-rd/compare/1.0.0...2.0.0) (2022-11-27)
 
 
