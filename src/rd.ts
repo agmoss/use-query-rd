@@ -47,7 +47,7 @@ export const success = <D = never>(data: D): RemoteData<D> => ({
   data
 })
 
-export const isInitialized = <D = never>(rd: RemoteData<D>): rd is Pending =>
+export const isInitialized = <D = never>(rd: RemoteData<D>): rd is Initialized =>
   rd.tag === Tags.Initialized
 export const isLoading = <D = never>(rd: RemoteData<D>): rd is Pending =>
   rd.tag === Tags.Pending

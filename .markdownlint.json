@@ -1,0 +1,30 @@
+{
+    "comment": "use-query-rd doc style guide",
+  
+    "default": true,
+    "MD003": {
+      "style": "atx"
+    },
+    "MD004": {
+      "style": "dash"
+    },
+    "MD007": {
+      "indent": 4
+    },
+    "MD013":{
+      "line_length": 500
+    },
+    "MD024": {
+      "allow_different_nesting": true,
+      "siblings_only": false
+    },
+    "MD030": {
+      "ul_multi": 3,
+      "ol_multi": 2
+    },
+    "MD033": false,
+    "MD035": {
+      "style": "---"
+    },
+    "MD051": false
+  }
