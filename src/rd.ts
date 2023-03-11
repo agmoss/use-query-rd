@@ -78,9 +78,6 @@ export const fold =
       }
     }
 
-export const map = <T, D>(f: (a: T) => D, fa: RemoteData<T>): RemoteData<D> =>
-  isSuccess(fa) ? success(f(fa.data)) : fa
-
 interface CompleteDataMatcher<T, D> {
   [Tags.Initialized]: () => T
   [Tags.Pending]: () => T
@@ -152,3 +149,31 @@ export const match = <T, D>(rd: RemoteData<D>, matcher: Matcher<T, D>): T => {
       throw new TypeError('RemoteData case not matched')
   }
 }
+
+export const map = <T, D>(f: (a: T) => D, fa: RemoteData<T>): RemoteData<D> =>
+  isSuccess(fa) ? success(f(fa.data)) : fa
+
+/**
+ * Combine two remote data sources with the given function. The
+  result will succeed when (and if) both sources succeed.
+ */
+export const map2 = <D, D2, D3>(
+  f: (d: D) => (d2: D2) => D3,
+  rd1: RemoteData<D>,
+  rd2: RemoteData<D2>,
+): RemoteData<D3> => andMap(rd2, map(f, rd1));
+
+/**
+ * Put the results of two RemoteData calls together.
+ * @see https://github.com/krisajenkins/remotedata/blob/6.0.1/src/RemoteData.elm#L361
+ */
+export const andMap = <RD1, RD2>(
+  rd1: RemoteData<RD1>,
+  rd2: RemoteData<(d: RD1) => RD2>,
+): RemoteData<RD2> =>
+  match<RemoteData<RD2>, (d: RD1) => RD2>(rd2, {
+    Initialized: () => initialized(),
+    Pending: () => pending(),
+    Success: (f) => map(f, rd1),
+    Failure: (e) => failure(e),
+  });
