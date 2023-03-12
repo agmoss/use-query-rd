@@ -1,4 +1,4 @@
-import { ApolloError, QueryResult } from '@apollo/client'
+import { type ApolloError, type QueryResult } from '@apollo/client'
 
 /**
  * @name RemoteData

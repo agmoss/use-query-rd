@@ -1,5 +1,5 @@
 import { fold, Tags } from '../src/rd'
-import { useQueryRd, QueryResultWithRemoteData } from '../src/useQueryRd'
+import { useQueryRd, type QueryResultWithRemoteData } from '../src/useQueryRd'
 import gql from 'graphql-tag'
 
 interface MyDataType {

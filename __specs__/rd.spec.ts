@@ -24,7 +24,7 @@ const _addSelf = (x: number): number => _add(x)(x)
 describe('RemoteData', () => {
   it('failure should have an error', () => {
     expect(rd3.tag).toEqual('Failure')
-    // @ts-expect-error
+    // @ts-expect-error Testing
     expect(rd3.error).toBeDefined()
   })
 
@@ -93,7 +93,7 @@ describe('RemoteData', () => {
     const failureMock = jest.fn()
     const view = fold(initializedMock, pendingMock, failureMock, successMock)
 
-    // @ts-expect-error
+    // @ts-expect-error Testing
     expect(() => view(otherMock)).toThrow('RemoteData case not matched')
   })
 
