@@ -7,7 +7,8 @@ import {
   map,
   success,
   Tags,
-  match
+  match,
+  map2
 } from '../src/rd'
 
 const rd1 = initialized()
@@ -16,6 +17,9 @@ const rd3 = failure(
     networkError: new Error('this is an error')
   })
 )
+
+const _add = (x: number) => (y: number):number => x +y
+const _addSelf = (x: number) => _add(x)(x)
 
 describe('RemoteData', () => {
   it('failure should have an error', () => {
@@ -30,9 +34,9 @@ describe('RemoteData', () => {
   })
 
   test('test map', () => {
-    const add = (x: number): number => x + x
-    expect(map(add, pending())).toEqual(pending())
-    expect(map(add, success(5))).toEqual(success(10))
+
+    expect(map(_addSelf, pending())).toEqual(pending())
+    expect(map(_addSelf, success(5))).toEqual(success(10))
   })
 
   test('fold initialized', () => {
@@ -149,4 +153,16 @@ describe('RemoteData', () => {
     expect(failureMock).not.toHaveBeenCalled()
     expect(_defaultMock).toHaveBeenCalledTimes(1)
   })
+
+
+  test("map2", () => {
+    expect(
+        map2(_add, success(1), pending())
+    ).toEqual(pending());
+
+    expect(
+        map2(_add, success(1), success(2))
+    ).toEqual(success(3));
+  })
+
 })
