@@ -21,6 +21,7 @@
       - [Signature](#signature-3)
     - [map2](#map2)
       - [Signature](#signature-4)
+      - [Example](#example-3)
   - [Constructors](#constructors)
     - [initialized](#initialized)
       - [Signature](#signature-5)
@@ -160,7 +161,7 @@ const formattedData = map((res: MyResultType) => {
 
 ### andMap
 
-Put the results of two RemoteData calls together.
+Put the results of two RemoteData calls together. Used to make mapX.
 
 [@see](https://github.com/krisajenkins/remotedata/blob/6.0.1/src/RemoteData.elm#L361)
 
@@ -185,6 +186,36 @@ const map2: <D, D2, D3>(
   rd1: RemoteData<D>,
   rd2: RemoteData<D2>
 ) => RemoteData<D3>;
+```
+
+#### Example
+
+```typescript
+export const Map2Example = () => {
+  const RD1 = useQueryRd<{ launchesPast: Launch[] }>(ROCKETS_QUERY, {
+    variables: { limit: 100 },
+  })._rd;
+
+  const RD2 = useQueryRd<{ launchpads: Launchpad[] }>(LAUNCHPADS_QUERY)._rd;
+
+  const comb =
+    (rd1: { launchesPast: Launch[] }) => (rd2: { launchpads: Launchpad[] }) => {
+      return {
+        one: rd1,
+        two: rd2,
+      };
+    };
+
+  return match(map2(comb, RD1, RD2), {
+    _: () => <p>Loading...</p>,
+    Failure: (error) => <p>Error while fetching data ({error.message})</p>,
+    Success: (data) => (
+      <>
+        <p>map2</p>
+        {JSON.stringify(data)}
+      </>
+    ),
+  });
 ```
 
 ## Constructors
