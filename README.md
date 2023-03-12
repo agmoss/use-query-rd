@@ -2,39 +2,44 @@
 
 > A drop in replacement for apollo client's `useQuery` hook with a return type that mimics Elm's RemoteData ADT
 
-- [`use-query-rd` ](#use-query-rd-)
-  - [Motivation](#motivation)
-  - [Inspo](#inspo)
-  - [useQueryRd](#usequeryrd)
-  - [Pattern Matching](#pattern-matching)
-    - [match](#match)
-      - [Signature](#signature)
-      - [Example](#example)
-    - [fold](#fold)
-      - [Signature](#signature-1)
-      - [Example](#example-1)
-  - [Mapping](#mapping)
-    - [map](#map)
-      - [Signature](#signature-2)
-      - [Example](#example-2)
-  - [Constructors](#constructors)
-    - [initialized](#initialized)
-      - [Signature](#signature-3)
-    - [pending](#pending)
-      - [Signature](#signature-4)
-    - [failure](#failure)
-      - [Signature](#signature-5)
-    - [success](#success)
-      - [Signature](#signature-6)
-  - [Refinements](#refinements)
-    - [isInitialized](#isinitialized)
-      - [Signature](#signature-7)
-    - [isLoading](#isloading)
-      - [Signature](#signature-8)
-    - [isFailure](#isfailure)
-      - [Signature](#signature-9)
-    - [isSuccess](#issuccess)
-      - [Signature](#signature-10)
+-   [`use-query-rd`](#use-query-rd-)
+    -   [Motivation](#motivation)
+    -   [Inspo](#inspo)
+    -   [useQueryRd](#usequeryrd)
+    -   [Pattern Matching](#pattern-matching)
+        -   [match](#match)
+            - [Signature](#signature)
+            - [Example](#example)
+        -   [fold](#fold)
+            - [Signature](#signature-1)
+            - [Example](#example-1)
+    -   [Mapping](#mapping)
+        -   [map](#map)
+            - [Signature](#signature-2)
+            - [Example](#example-2)
+        -   [andMap](#andmap)
+            - [Signature](#signature-3)
+        -   [map2](#map2)
+            - [Signature](#signature-4)
+            - [Example](#example-3)
+    -   [Constructors](#constructors)
+        -   [initialized](#initialized)
+            - [Signature](#signature-5)
+        -   [pending](#pending)
+            - [Signature](#signature-6)
+        -   [failure](#failure)
+            - [Signature](#signature-7)
+        -   [success](#success)
+            - [Signature](#signature-8)
+    -   [Refinements](#refinements)
+        -   [isInitialized](#isinitialized)
+            - [Signature](#signature-9)
+        -   [isLoading](#isloading)
+            - [Signature](#signature-10)
+        -   [isFailure](#isfailure)
+            - [Signature](#signature-11)
+        -   [isSuccess](#issuccess)
+            - [Signature](#signature-12)
 
 ## Motivation
 
@@ -152,6 +157,65 @@ const formattedData = map((res: MyResultType) => {
     myManipulatedData: manipulatedData,
   };
 }, myInitialData);
+```
+
+### andMap
+
+Put the results of two RemoteData calls together. Used to make mapX.
+
+[@see](https://github.com/krisajenkins/remotedata/blob/6.0.1/src/RemoteData.elm#L361)
+
+#### Signature
+
+```typescript
+const andMap: <RD1, RD2>(
+  rd1: RemoteData<RD1>,
+  rd2: RemoteData<(d: RD1) => RD2>
+) => RemoteData<RD2>;
+```
+
+### map2
+
+Combine two remote data sources with the given function. The result will succeed when (and if) both sources succeed.
+
+#### Signature
+
+```typescript
+const map2: <D, D2, D3>(
+  f: (d: D) => (d2: D2) => D3,
+  rd1: RemoteData<D>,
+  rd2: RemoteData<D2>
+) => RemoteData<D3>;
+```
+
+#### Example
+
+```typescript
+export const Map2Example = () => {
+  const RD1 = useQueryRd<{ launchesPast: Launch[] }>(ROCKETS_QUERY, {
+    variables: { limit: 100 },
+  })._rd;
+
+  const RD2 = useQueryRd<{ launchpads: Launchpad[] }>(LAUNCHPADS_QUERY)._rd;
+
+  const comb =
+    (rd1: { launchesPast: Launch[] }) => (rd2: { launchpads: Launchpad[] }) => {
+      return {
+        one: rd1,
+        two: rd2,
+      };
+    };
+
+  return match(map2(comb, RD1, RD2), {
+    _: () => <p>Loading...</p>,
+    Failure: (error) => <p>Error while fetching data ({error.message})</p>,
+    Success: (data) => (
+      <>
+        <p>map2</p>
+        {JSON.stringify(data)}
+      </>
+    ),
+  });
 ```
 
 ## Constructors

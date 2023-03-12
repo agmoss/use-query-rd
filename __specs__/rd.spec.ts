@@ -7,7 +7,8 @@ import {
   map,
   success,
   Tags,
-  match
+  match,
+  map2
 } from '../src/rd'
 
 const rd1 = initialized()
@@ -17,10 +18,13 @@ const rd3 = failure(
   })
 )
 
+const _add = (x: number) => (y: number): number => x + y
+const _addSelf = (x: number): number => _add(x)(x)
+
 describe('RemoteData', () => {
   it('failure should have an error', () => {
     expect(rd3.tag).toEqual('Failure')
-    // @ts-expect-error
+    // @ts-expect-error Testing
     expect(rd3.error).toBeDefined()
   })
 
@@ -30,9 +34,8 @@ describe('RemoteData', () => {
   })
 
   test('test map', () => {
-    const add = (x: number): number => x + x
-    expect(map(add, pending())).toEqual(pending())
-    expect(map(add, success(5))).toEqual(success(10))
+    expect(map(_addSelf, pending())).toEqual(pending())
+    expect(map(_addSelf, success(5))).toEqual(success(10))
   })
 
   test('fold initialized', () => {
@@ -90,7 +93,7 @@ describe('RemoteData', () => {
     const failureMock = jest.fn()
     const view = fold(initializedMock, pendingMock, failureMock, successMock)
 
-    // @ts-expect-error
+    // @ts-expect-error Testing
     expect(() => view(otherMock)).toThrow('RemoteData case not matched')
   })
 
@@ -148,5 +151,15 @@ describe('RemoteData', () => {
     expect(successMock).not.toHaveBeenCalled()
     expect(failureMock).not.toHaveBeenCalled()
     expect(_defaultMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('map2', () => {
+    expect(
+      map2(_add, success(1), pending())
+    ).toEqual(pending())
+
+    expect(
+      map2(_add, success(1), success(2))
+    ).toEqual(success(3))
   })
 })

@@ -1,7 +1,7 @@
-import { OperationVariables, useQuery } from '@apollo/client'
-import { RemoteData, Tags } from './rd'
+import { type OperationVariables, useQuery } from '@apollo/client'
+import { type RemoteData, Tags } from './rd'
 
-export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<
+export type QueryResultWithRemoteData<TData, TVariables extends OperationVariables = OperationVariables> = ReturnType<
   typeof useQueryRd<TData, TVariables>
 >
 
@@ -13,7 +13,7 @@ export type QueryResultWithRemoteData<TData, TVariables = void> = ReturnType<
  * @note RemoteData is tagged with `tag`. There is no generic for Error as it will always be an ApolloError.
  * @returns Everything from `QueryResult` with an accompanying `_rd` property wth the RemoteData object
  */
-export const useQueryRd = <TData, TVariables = OperationVariables>(
+export const useQueryRd = <TData, TVariables extends OperationVariables = OperationVariables>(
   ...params: Parameters<typeof useQuery<TData, TVariables>>
 ): ReturnType<typeof useQuery<TData, TVariables>> & {
     _rd: RemoteData<TData>
